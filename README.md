@@ -21,8 +21,6 @@ Required packages are `meta`, `metafor`, `ggplot2`, `tidyr`, `readxl`, `clubSand
 ## Key analytical settings
 
 - Additive, multiplicative, and dominance null-model predictions are compared using the common Hedges’ *d* standardization described in the manuscript.
-- Observations involving invasive-species stressors are excluded from the revised analysis.
-- Non-positive responses are retained in the multiplicative calculation for the diagnostic comparison among null models and are flagged by `MultiplicativePositiveResponse`.
 - Non-estimable effect sizes, non-positive sampling variances, and observations with `|d| > 30` are excluded.
 - Multilevel models include study and observation nested within study as random effects and use study-clustered CR2 inference.
 - The primary within-study sampling correlation is 0.6; sensitivity analyses repeat the overall models using correlations of 0, 0.3, 0.6, and 0.9 and use leave-one-study-out analyses.
