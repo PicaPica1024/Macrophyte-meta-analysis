@@ -1,9 +1,29 @@
-# Macrophyte meta-analysis
+# Reproducibility files
 
-Data and code used for the paper "Interactions between global change stressors on submerged plants depend on null models, experiment conditions, and plant traits" which was authored by Jiangqiu Zhu, Peiyu Zhang, Sabine Hilt, Samuel J. Macaulay, Manqi Chang, Haowu Cheng, Min Zhang, and Jun Xu
+This folder contains the data and R code accompanying the manuscript **“Context dependence of interactions among global change stressors on submerged plants: roles of null models, experimental conditions, and plant traits.”**
 
-# Abstract
+## Files
 
-Submerged plants play key roles in shallow aquatic ecosystems, and are affected by multiple, simultaneously occurring global change stressors. However, understanding the interactive effects of these stressors remains challenging due to the influence of null model selection, experimental conditions (external factors), and plant traits (intrinsic factors). To test the impact of these moderators, we compiled 176 published full-factorial experiments with pairwise global change stressors on the growth of submerged plants, and applied three commonly used alternative null models (additive, multiplicative, and dominance) to capture the interactive effects of stressors. We qualitatively compared the interaction direction detected by different null models, and tested the effects of plant traits and experimental conditions on interactions. The consensus across all models was that the averaged interactive effect was additive. All three models consistently identified 26% of interactions as antagonistic, whereas the proportion of synergistic effects ranged from 13% to 15% depending on the model’s choice. For studies showing antagonistic effects, only 29.6% studies were identified by all three models, while for synergistic and additive effects, the figures were 51.4% and 58.1%, respectively. Experimental conditions and plant intrinsic traits did affect the stressor interactions. Experiments performed under high nutrient conditions, or without fish, or involving snails were more likely to exhibit antagonistic interactions. And experiments targeted on warm-tolerant species, eutrophic-sensitive species, and species with C3 photosynthetic strategy showed antagonistic effects. Presumed mechanisms for these moderating effects are the non-linear responses to stressors and the  co-tolerant response of stressors for organisms. Our results demonstrate that the interactive effects of global change stressors are highly context dependent, and no general interactive effects of stressors could be summarized from current studies. Future studies should try to investigate the interactive effects of stressors on submerged macrophytes in a more realistic environment and report the experimental conditions as detail as possible.
+- `Analysis code.R`: complete data cleaning, effect-size calculation, meta-analysis, moderator analysis, model selection, publication-bias analysis, sensitivity analysis, and figure-generation workflow.
+- `data.xlsx`: observation-level meta-analysis dataset read by the R script.
+- `plant traits.xlsx`: species-level trait classifications and supporting references.
 
-***" If you have any questions about the dataset or about reuse of the data, please contact Jiangqiu Zhu (zhujiangqiu24@mails.ucas.ac.cn) "***
+## Running the analysis
+
+1. Place `Analysis code.R`, `data.xlsx`, and `plant traits.xlsx` in the same directory.
+2. Set the R working directory to that directory.
+3. Run `Analysis code.R` from top to bottom.
+
+The script creates an `analysis outputs` subdirectory and writes the generated figures and tables there. It reproduces the data-derived manuscript Figures 2–5; Figure 2 is also saved as separate chord-diagram and Venn-diagram panels for inspection. The conceptual Figure 1 is not generated from the analysis data. The analyses were developed in R 4.4.1.
+
+Required packages are `meta`, `metafor`, `ggplot2`, `tidyr`, `readxl`, `clubSandwich`, `dmetar`, `MuMIn`, `dplyr`, `cowplot`, `patchwork`, `grid`, `circlize`, `gridExtra`, `eulerr`, and `png`.
+
+## Key analytical settings
+
+- Additive, multiplicative, and dominance null-model predictions are compared using the common Hedges’ *d* standardization described in the manuscript.
+- Observations involving invasive-species stressors are excluded from the revised analysis.
+- Non-positive responses are retained in the multiplicative calculation for the diagnostic comparison among null models and are flagged by `MultiplicativePositiveResponse`.
+- Non-estimable effect sizes, non-positive sampling variances, and observations with `|d| > 30` are excluded.
+- Multilevel models include study and observation nested within study as random effects and use study-clustered CR2 inference.
+- The primary within-study sampling correlation is 0.6; sensitivity analyses repeat the overall models using correlations of 0, 0.3, 0.6, and 0.9 and use leave-one-study-out analyses.
+- Model selection uses maximum likelihood, AICc, and retains models with `Delta AICc < 3`.
